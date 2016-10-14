@@ -67,3 +67,12 @@ A library of Prolog predicates for CLP(FD) arithmetic.
     Z = 14,
     P = 4788 ;
     …
+
+
+    ?- range(I, J, [5,A,B,C,D]).
+    I = 5,
+    J = D, D = 9,
+    A = 6,
+    B = 7,
+    C = 8 ;
+    false.
