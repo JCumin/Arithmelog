@@ -38,6 +38,7 @@ A library of Prolog predicates for CLP(FD) arithmetic.
     X = 7 ;
     X = 11 ;
     X = 13 ;
+    …
     
     
     ?- prime(X), even(X).
