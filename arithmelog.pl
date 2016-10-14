@@ -47,9 +47,12 @@ if_(If_1, Then_0, Else_0) :-
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 has_constraint(N, C) :-
     get_attr(N, clpfd, Cs),
-    compound_name_arguments(Cs,clpfd_attr,Z),
+    compound_name_arguments(Cs, clpfd_attr, Z),
+    maplist(=.., Z, W),
+    member([fd_props|T], W),
     Constraint =.. [C,N],
-    member([propagator(Constraint,_)], Z).
+    member(E, T),
+    member(propagator(Constraint,_), E).
 
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -57,9 +60,13 @@ has_constraint(N, C) :-
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 doesnt_have_constraint(N, C) :-
     get_attr(N, clpfd, Cs),
-    compound_name_arguments(Cs,clpfd_attr,Z),
+    compound_name_arguments(Cs, clpfd_attr, Z),
+    maplist(=.., Z, W),
+    member([fd_props|T], W),
     Constraint =.. [C,N],
-    \+ member([propagator(Constraint,_)], Z).
+    \+ (member(E, T),
+        member(propagator(Constraint,_), E)
+    ).
 
 
 
