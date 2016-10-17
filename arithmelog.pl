@@ -11,7 +11,8 @@
                        factorial/2,
                        divisible_by/2,
                        nth_root/3,
-                       floored_sqrt/2
+                       floored_sqrt/2,
+                       polygonal_number/2
                       ]).
 
 :- use_module(library(clpfd)).
@@ -341,3 +342,18 @@ floored_sqrt(N, Root) :-
     Max in 0..N,
     R^2 #= Max,
     fd_sup(R, Root).
+
+
+%% polygonal_number(?Side, ?Int)
+%
+% Int is a Side-gonal number.
+
+polygonal_number(S, 1) :-
+    S in 3..sup.
+polygonal_number(S, N) :-
+    I in 0..sup,
+    S in 3..sup,
+    N in 1..sup,
+    I #=< N,
+    S #=< N,
+    N #= (I*I*(S - 2) - I*(S - 4))//2.
