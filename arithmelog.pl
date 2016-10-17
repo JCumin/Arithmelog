@@ -302,17 +302,14 @@ range(I, S, [I|R]) :-
 % Fact is the factorial of Int.
 
 factorial(N, F) :-
+    F #> 0,
+    N #>= 0,
     if_(N = 0,
         F = 1,
-        (   if_(N = 1,
-                F = 1,
-                (   N #> 1,
-                    N #=< F,
-                    even(F),
-                    range(2, N, R),
-                    product(R, F)
-                )
-            )
+        (   N #> 0,
+            M #= N - 1,
+            F #= G * N,
+            factorial(M, G)
         )
     ).
 
