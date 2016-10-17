@@ -50,8 +50,7 @@ A library of Prolog predicates for CLP(FD) arithmetic.
     
     
     ?- factorial(X, 720).
-    X = 6 ;
-    false.
+    X = 6.
 
 
     ?- X #> Y, Y#> Z, prime(X), even(Y), composite(Z), divisible_by(Z, 7), product([X,Y,Z],P), unsafe_label([X,Y,Z]).
