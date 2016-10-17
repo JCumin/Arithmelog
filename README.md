@@ -15,6 +15,7 @@ A library of Prolog predicates for CLP(FD) arithmetic.
  - `even/1`
  - `odd/1`
  - `divisible_by/2`
+ - `polygonal_number/2`
  
  ###Operators
  
