@@ -136,9 +136,12 @@ positive_integer(I) :-
 % Int is a prime number.
 
 prime(N) :-
-    clpfd:make_propagator(prime(N), Prop),
-    clpfd:init_propagator(N, Prop),
-    clpfd:trigger_once(Prop).
+    (   has_constraint(N, prime) ->
+        true
+    ;   clpfd:make_propagator(prime(N), Prop),
+        clpfd:init_propagator(N, Prop),
+        clpfd:trigger_once(Prop)
+    ).
 
 clpfd:run_propagator(prime(N), MState) :-
     (   integer(N) ->
@@ -190,9 +193,12 @@ check_prime_2(N, SN, D, L, LF) :-
 % divisor other than 1 and itself.
 
 composite(N) :-
-    clpfd:make_propagator(composite(N), Prop),
-    clpfd:init_propagator(N, Prop),
-    clpfd:trigger_once(Prop).
+    (   has_constraint(N, composite) ->
+        true
+    ;   clpfd:make_propagator(composite(N), Prop),
+        clpfd:init_propagator(N, Prop),
+        clpfd:trigger_once(Prop)
+    ).
 
 clpfd:run_propagator(composite(N), MState) :-
     (   integer(N) ->
@@ -213,9 +219,12 @@ clpfd:run_propagator(composite(N), MState) :-
 % Int is an even number.
 
 even(N) :-
-    clpfd:make_propagator(even(N), Prop),
-    clpfd:init_propagator(N, Prop),
-    clpfd:trigger_once(Prop).
+    (   has_constraint(N, even) ->
+        true
+    ;   clpfd:make_propagator(even(N), Prop),
+        clpfd:init_propagator(N, Prop),
+        clpfd:trigger_once(Prop)
+    ).
 
 clpfd:run_propagator(even(N), MState) :-
     (   integer(N) ->
@@ -233,9 +242,12 @@ clpfd:run_propagator(even(N), MState) :-
 % Int is an odd number.
 
 odd(N) :-
-    clpfd:make_propagator(odd(N), Prop),
-    clpfd:init_propagator(N, Prop),
-    clpfd:trigger_once(Prop).
+    (   has_constraint(N, odd) ->
+        true
+    ;   clpfd:make_propagator(odd(N), Prop),
+        clpfd:init_propagator(N, Prop),
+        clpfd:trigger_once(Prop)
+    ).
 
 clpfd:run_propagator(odd(N), MState) :-
     (   integer(N) ->
