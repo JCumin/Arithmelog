@@ -332,7 +332,7 @@ factorial(N, F) :-
 % Int is divisible by Div. Div cannot be 0 even if Int is 0.
 
 divisible_by(N, D) :-
-    dif(D, 0),
+    D #\= 0,
     N #= D*_.
 
 
