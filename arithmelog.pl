@@ -1,5 +1,5 @@
 :- module(arithmelog, [
-                       unsafe_label/1,
+                       unsafe_label/1
                        unsafe_indomain/1,
                        prime/1,
                        composite/1,
@@ -16,7 +16,8 @@
                        (<)/1,
                        (>)/1,
                        (=<)/1,
-                       (>=)/1
+                       (>=)/1,
+                       perfect_square/1
                       ]).
 
 :- use_module(library(clpfd)).
@@ -429,3 +430,12 @@ polygonal_number(S, N) :-
             >=(T)
         )
     ).
+
+
+%% perfect_square(?Int)
+%
+% Int is the square of an integer.
+
+perfect_square(N) :-
+    N in 0..sup,
+    N #= I*I.
