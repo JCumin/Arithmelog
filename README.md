@@ -16,6 +16,10 @@ A library of Prolog predicates for CLP(FD) arithmetic.
  - `odd/1`
  - `divisible_by/2`
  - `polygonal_number/2`
+ - `(<)/1`: A list of strictly increasing integers.
+ - `(>)/1`: A list of strictly decreasing integers.
+ - `(=<)/1`: A list of increasing integers.
+ - `(>=)/1`: A list of decreasing integers.
  
  ###Operators
  
