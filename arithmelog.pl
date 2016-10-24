@@ -12,7 +12,11 @@
                        divisible_by/2,
                        nth_root/3,
                        floored_sqrt/2,
-                       polygonal_number/2
+                       polygonal_number/2,
+                       (<)/1,
+                       (>)/1,
+                       (=<)/1,
+                       (>=)/1
                       ]).
 
 :- use_module(library(clpfd)).
@@ -369,3 +373,59 @@ polygonal_number(S, N) :-
     I #=< N,
     S #=< N,
     N #= (I*I*(S - 2) - I*(S - 4))//2.
+
+
+%% <(?Vars)
+%
+% Vars is a list of strictly increasing integers.
+<([]).
+<([H|T]) :-
+    if_(T = [],
+        true,
+        (   T = [H2|_],
+            H #< H2,
+            <(T)
+        )
+    ).
+
+
+%% >(?Vars)
+%
+% Vars is a list of strictly decreasing integers.
+>([]).
+>([H|T]) :-
+    if_(T = [],
+        true,
+        (   T = [H2|_],
+            H #> H2,
+            >(T)
+        )
+    ).
+
+
+%% =<(?Vars)
+%
+% Vars is a list of increasing integers.
+=<([]).
+=<([H|T]) :-
+    if_(T = [],
+        true,
+        (   T = [H2|_],
+            H #=< H2,
+            =<(T)
+        )
+    ).
+
+
+%% >=(?Vars)
+%
+% Vars is a list of decreasing integers.
+>=([]).
+>=([H|T]) :-
+    if_(T = [],
+        true,
+        (   T = [H2|_],
+            H #>= H2,
+            >=(T)
+        )
+    ).
