@@ -1,6 +1,8 @@
 # Arithmelog
 A library of Prolog predicates for CLP(FD) arithmetic.
 
+This module is here to provide simple predicates with descriptive names so that programs dealing with arithmetic become much more readable and declarative. We feel that there is a gap in built-in tools for arithmetic based on CLP(FD).
+
 ##Available predicates
 
 ###Labeling
@@ -20,6 +22,7 @@ A library of Prolog predicates for CLP(FD) arithmetic.
  - `(>)/1`: A list of strictly decreasing integers.
  - `(=<)/1`: A list of increasing integers.
  - `(>=)/1`: A list of decreasing integers.
+ - `perfect_square/1`
  
  ###Operators
  
