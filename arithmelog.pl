@@ -320,15 +320,30 @@ range(I, S, [I|R]) :-
 % Fact is the factorial of Int.
 
 factorial(N, F) :-
-    F #> 0,
-    N #>= 0,
-    if_(N = 0,
-        F = 1,
-        (   N #> 0,
-            M #= N - 1,
-            F #= G * N,
-            factorial(M, G)
+    (   integer(F) ->
+        is_factorial(F)
+    ;   F #> 0,
+        N #>= 0,
+        if_(N = 0,
+            F = 1,
+            (   N #> 0,
+                M #= N - 1,
+                F #= G * N,
+                factorial(M, G)
+            )
         )
+    ).
+
+is_factorial(N) :-
+    (   N = 1 -> true
+    ;   is_factorial(N, 2)
+    ).
+
+is_factorial(N, M) :-
+    (   N = M -> true
+    ;   N #= N1*M,
+        M1 #= M + 1,
+        is_factorial(N1, M1)
     ).
 
 
