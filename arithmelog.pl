@@ -47,6 +47,14 @@ if_(If_1, Then_0, Else_0) :-
         dif(X, Y)
     ).
 
+#>(X, Y, T) :-
+    zcompare(C, X, Y),
+    greater_true(C, T).
+
+greater_true(>, true).
+greater_true(<, false).
+greater_true(=, false).
+
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
    has_constraint/2
@@ -323,6 +331,10 @@ factorial(N, F) :-
     factorial(N, 0, 1, F).
 
 factorial(N, I, N0, F) :-
+    if_(I #> 2,
+        F #> N,
+        F #>= N
+    ),
     F #> 0,
     N #>= 0,
     I #>= 0,
