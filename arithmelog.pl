@@ -55,6 +55,15 @@ greater_true(>, true).
 greater_true(<, false).
 greater_true(=, false).
 
+===(X1, Y1, X2, Y2, T1, T) :-
+    (   X1 == Y1 -> T1 = true, T = true
+    ;   X1 \= Y1 -> T1 = true, T = false
+    ;   X2 == Y2 -> T1 = false, T = true
+    ;   X2 \= Y2 -> T1 = false, T = false
+    ;   T1 = true, T = true, X1 = Y1
+    ;   T1 = true, T = false, dif(X1, Y1)
+    ).
+
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
    has_constraint/2
@@ -331,21 +340,31 @@ factorial(N, F) :-
     factorial(N, 0, 1, F).
 
 factorial(N, I, N0, F) :-
-    if_(I #> 2,
-        F #> N,
-        F #>= N
-    ),
     F #> 0,
     N #>= 0,
     I #>= 0,
     I #=< N,
     N0 #> 0,
     N0 #=< F,
-    if_(N = I,
-        N0 = F,
-        (   J #= I + 1,
-            N1 #= N0*J,
-            factorial(N, J, N1, F)
+    if_(I #> 2,
+        (   F #> N,
+            if_(===(N, I, N0, F, T1),
+                if_(T1 = true,
+                    N0 = F,
+                    N = I
+                ),
+                (   J #= I + 1,
+                    N1 #= N0*J,
+                    factorial(N, J, N1, F)
+                )
+            )
+        ),
+        if_(N = I,
+            N0 = F,
+            (   J #= I + 1,
+                N1 #= N0*J,
+                factorial(N, J, N1, F)
+            )
         )
     ).
 
