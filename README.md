@@ -9,7 +9,7 @@ This module is here to provide simple predicates with descriptive names so that 
 
 Arithmelog is self-contained for SWI-Prolog.
 
-###SICStus
+###SICStus - No-fully functional
 
 For SICStus, Arithmelog requires [CLP(Z)](https://github.com/triska/clpz) (by Markus Triska), [available here](https://www.metalevel.at/clpz.pl). It also requires `module(reif)` (by Ulrich Neumerkel), [available here](http://www.complang.tuwien.ac.at/ulrich/Prolog-inedit/sicstus/reif.pl).
 
