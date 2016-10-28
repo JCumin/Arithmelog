@@ -20,10 +20,14 @@
                        perfect_square/1
                       ]).
 
+:- use_module(library(lists)).
+                      
 :- use_module(clpz).
 :- use_module(reif).
 
-:- multifile clpfd:run_propagator/2.
+:- multifile clpz:run_propagator/2.
+
+:- discontiguous clpz:run_propagator/2.
 
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -52,8 +56,8 @@ greater_true(=, false).
    has_constraint/2
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 has_constraint(N, C) :-
-    get_attr(N, clpfd, Cs),
-    compound_name_arguments(Cs, clpfd_attr, Z),
+    clpz:get_atts(N, Cs),
+    Cs =.. Z,
     maplist(=.., Z, W),
     member([fd_props|T], W),
     Constraint =.. [C,N],
@@ -65,8 +69,8 @@ has_constraint(N, C) :-
    doesnt_have_constraint/2
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 doesnt_have_constraint(N, C) :-
-    get_attr(N, clpfd, Cs),
-    compound_name_arguments(Cs, clpfd_attr, Z),
+    clpz:get_atts(N, Cs),
+    Cs =.. Z,
     maplist(=.., Z, W),
     member([fd_props|T], W),
     Constraint =.. [C,N],
@@ -143,22 +147,22 @@ positive_integer(I) :-
 prime(N) :-
     (   has_constraint(N, prime) ->
         true
-    ;   clpfd:make_propagator(prime(N), Prop),
-        clpfd:init_propagator(N, Prop),
-        clpfd:trigger_once(Prop)
+    ;   clpz:make_propagator(prime(N), Prop),
+        clpz:init_propagator(N, Prop),
+        clpz:trigger_once(Prop)
     ).
 
-clpfd:run_propagator(prime(N), MState) :-
+clpz:run_propagator(prime(N), MState) :-
     (   integer(N) ->
-        clpfd:kill(MState),
+        clpz:kill(MState),
         check_prime(N)
     ;   has_constraint(N, even) ->
-        clpfd:kill(MState),
+        clpz:kill(MState),
         N = 2
     ;   doesnt_have_constraint(N, composite),
-        clpfd:fd_get(N, ND, NL, NU, NPs),
-        clpfd:cis_max(NL, n(2), NNL),
-        clpfd:update_bounds(N, ND, NPs, NL, NU, NNL, NU)
+        clpz:fd_get(N, ND, NL, NU, NPs),
+        clpz:cis_max(NL, n(2), NNL),
+        clpz:update_bounds(N, ND, NPs, NL, NU, NNL, NU)
     ).
 
 check_prime(N) :-
@@ -200,22 +204,22 @@ check_prime_2(N, SN, D, L, LF) :-
 composite(N) :-
     (   has_constraint(N, composite) ->
         true
-    ;   clpfd:make_propagator(composite(N), Prop),
-        clpfd:init_propagator(N, Prop),
-        clpfd:trigger_once(Prop)
+    ;   clpz:make_propagator(composite(N), Prop),
+        clpz:init_propagator(N, Prop),
+        clpz:trigger_once(Prop)
     ).
 
-clpfd:run_propagator(composite(N), MState) :-
+clpz:run_propagator(composite(N), MState) :-
     (   integer(N) ->
-        clpfd:kill(MState),
+        clpz:kill(MState),
         \+ check_prime(N)
-    ;   clpfd:fd_get(N, ND, NL, NU, NPs),
+    ;   clpz:fd_get(N, ND, NL, NU, NPs),
         doesnt_have_constraint(N, prime),
         (   has_constraint(N, odd) ->
-            clpfd:cis_max(NL, n(5), NNL)
-        ;   clpfd:cis_max(NL, n(4), NNL)
+            clpz:cis_max(NL, n(5), NNL)
+        ;   clpz:cis_max(NL, n(4), NNL)
         ),
-        clpfd:update_bounds(N, ND, NPs, NL, NU, NNL, NU)
+        clpz:update_bounds(N, ND, NPs, NL, NU, NNL, NU)
     ).
 
 
@@ -226,17 +230,17 @@ clpfd:run_propagator(composite(N), MState) :-
 even(N) :-
     (   has_constraint(N, even) ->
         true
-    ;   clpfd:make_propagator(even(N), Prop),
-        clpfd:init_propagator(N, Prop),
-        clpfd:trigger_once(Prop)
+    ;   clpz:make_propagator(even(N), Prop),
+        clpz:init_propagator(N, Prop),
+        clpz:trigger_once(Prop)
     ).
 
-clpfd:run_propagator(even(N), MState) :-
+clpz:run_propagator(even(N), MState) :-
     (   integer(N) ->
-        clpfd:kill(MState),
+        clpz:kill(MState),
         N #= 2*_
     ;   has_constraint(N, prime) ->
-        clpfd:kill(MState),
+        clpz:kill(MState),
         N = 2
     ;   doesnt_have_constraint(N, odd)
     ).
@@ -249,24 +253,24 @@ clpfd:run_propagator(even(N), MState) :-
 odd(N) :-
     (   has_constraint(N, odd) ->
         true
-    ;   clpfd:make_propagator(odd(N), Prop),
-        clpfd:init_propagator(N, Prop),
-        clpfd:trigger_once(Prop)
+    ;   clpz:make_propagator(odd(N), Prop),
+        clpz:init_propagator(N, Prop),
+        clpz:trigger_once(Prop)
     ).
 
-clpfd:run_propagator(odd(N), MState) :-
+clpz:run_propagator(odd(N), MState) :-
     (   integer(N) ->
-        clpfd:kill(MState),
+        clpz:kill(MState),
         N #= 2*_ + 1
     ;   doesnt_have_constraint(N, even),
         (   has_constraint(N, prime) ->
-            clpfd:fd_get(N, ND, NL, NU, NPs),
-            clpfd:cis_max(NL, n(3), NNL),
-            clpfd:update_bounds(N, ND, NPs, NL, NU, NNL, NU)
+            clpz:fd_get(N, ND, NL, NU, NPs),
+            clpz:cis_max(NL, n(3), NNL),
+            clpz:update_bounds(N, ND, NPs, NL, NU, NNL, NU)
         ;   has_constraint(N, composite) ->
-            clpfd:fd_get(N, ND, NL, NU, NPs),
-            clpfd:cis_max(NL, n(5), NNL),
-            clpfd:update_bounds(N, ND, NPs, NL, NU, NNL, NU)
+            clpz:fd_get(N, ND, NL, NU, NPs),
+            clpz:cis_max(NL, n(5), NNL),
+            clpz:update_bounds(N, ND, NPs, NL, NU, NNL, NU)
         ;   true
         )
     ).
