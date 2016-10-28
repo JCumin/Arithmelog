@@ -3,6 +3,16 @@ A library of Prolog predicates for CLP(FD) arithmetic.
 
 This module is here to provide simple predicates with descriptive names so that programs dealing with arithmetic become much more readable and declarative. We feel that there is a gap in built-in tools for arithmetic based on CLP(FD).
 
+##How to use
+
+###SWI-Prolog
+
+Arithmelog is self-contained for SWI-Prolog.
+
+###SICStus
+
+For SICStus, Arithmelog requires [CLP(Z)](https://github.com/triska/clpz) (by Markus Triska), [available here](https://www.metalevel.at/clpz.pl). It also requires `module(reif)` (by Ulrich Neumerkel), [available here](http://www.complang.tuwien.ac.at/ulrich/Prolog-inedit/sicstus/reif.pl).
+
 ##Available predicates
 
 ###Labeling
