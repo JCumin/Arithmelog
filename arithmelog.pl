@@ -1,5 +1,5 @@
 :- module(arithmelog, [
-                       unsafe_label/1
+                       unsafe_label/1,
                        unsafe_indomain/1,
                        prime/1,
                        composite/1,
